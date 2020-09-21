@@ -2,13 +2,19 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
-
-	"golang.org/x/crypto/bcrypt"
+	"os"
+	"time"
 
 	"github.com/abinash393/voting-app/model"
+	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
+
+var threeDays = time.Hour * 24 * 3
+var secret = []byte(os.Getenv("JWT_SECRET"))
 
 // Response struct
 type Response struct {
@@ -50,21 +56,41 @@ func Login(res http.ResponseWriter, req *http.Request) {
 
 	var userInfo model.User
 	if err := json.Unmarshal(body, &userInfo); err != nil {
-		panic(err.Error())
+		panic("jsonUnmarshal" + err.Error())
 	}
 
 	var hashPassword string
-	if err := model.DB.QueryRow(`SELECT password FROM users WHERE email = $`, userInfo.Email).Scan(&hashPassword); err != nil {
-		panic(err.Error())
+	var UserID uint8
+	if err := model.DB.QueryRow("SELECT user_id, password FROM `users` WHERE email = ?;",
+		userInfo.Email).Scan(&UserID, &hashPassword); err != nil {
+		panic("DB QUERY ERR" + err.Error())
 	}
-
 	res.Header().Set("Content-Type", "application/json")
-	if err := bcrypt.CompareHashAndPassword([]byte(hashPassword), []byte(userInfo.Password)); err != nil {
+	// checking the password
+	if err := bcrypt.CompareHashAndPassword([]byte(hashPassword), []byte(userInfo.Password)); err == nil {
+		v, err := uuid.NewRandom()
+		if err != nil {
+			panic(err.Error())
+		}
+
+		// saving session to redis
+		model.Rdb.HMSet(model.Ctx, v.String(), "email", userInfo.Email, "userId", UserID)
+
+		cookie := http.Cookie{
+			Path:     "/",
+			Name:     "sid",
+			Value:    v.String(),
+			Expires:  time.Now().Add(threeDays),
+			HttpOnly: true,
+			SameSite: http.SameSiteLaxMode,
+		}
+		http.SetCookie(res, &cookie)
 
 		res.WriteHeader(http.StatusOK)
 		json.NewEncoder(res).Encode(Response{true, ""})
 	} else {
+		fmt.Println(err)
 		res.WriteHeader(http.StatusUnauthorized)
-		json.NewEncoder(res).Encode(Response{})
+		json.NewEncoder(res).Encode(Response{false, "Wrong Credential"})
 	}
 }

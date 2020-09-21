@@ -7,10 +7,11 @@ import (
 	"os"
 	"time"
 
+	con "github.com/abinash393/voting-app/controller"
+	mid "github.com/abinash393/voting-app/middleware"
 	"github.com/abinash393/voting-app/model"
 
-	"github.com/abinash393/voting-app/controller"
-	"github.com/abinash393/voting-app/middleware"
+	"github.com/go-redis/redis/v8"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -34,17 +35,42 @@ func init() {
 		log.Println("DataBase Connected")
 		model.DB = db
 	}
+	// init redis server
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
+
+	if pong, err := rdb.Ping(model.Ctx).Result(); err != nil {
+		log.Println(err.Error())
+	} else {
+		model.Rdb = rdb
+		log.Println(pong)
+	}
 }
 
 func main() {
 	defer model.DB.Close()
-	router := mux.NewRouter()
-	router.Use(middleware.Logger)
 
-	router.HandleFunc("/", controller.Index).Methods("GET")
-	router.HandleFunc("/auth", controller.Auth).Methods("GET")
-	router.HandleFunc("/api/v1/user/signup", controller.Signup).Methods("POST")
-	router.HandleFunc("/api/v1/user/login", controller.Login).Methods("POST")
+	r := mux.NewRouter()
+	r.Use(mid.Logger)
+	// r.Use(mid.Recover)
 
-	log.Println(http.ListenAndServe(os.Getenv("PORT"), router))
+	// static
+	r.HandleFunc("/", mid.Auth(con.Index)).Methods("GET")
+	r.HandleFunc("/signup", con.SignupPage).Methods("GET")
+	r.HandleFunc("/login", con.LoginPage).Methods("GET")
+	// template
+	r.HandleFunc("/polls/view/{id:[0-9]+}", mid.Auth(con.ViewPolls)).Methods("GET")
+	r.HandleFunc("/polls/my/{page:[0-9]+}", mid.Auth(con.MyPolls)).Methods("GET")
+	r.HandleFunc("/polls/other/{page:[0-9]+}", con.OtherPolls).Methods("GET")
+	// rest api
+	r.HandleFunc("/api/v1/user/signup", con.Signup).Methods("POST")
+	r.HandleFunc("/api/v1/user/login", con.Login).Methods("POST")
+	r.HandleFunc("/api/v1/polls/create", mid.Auth(con.CreatePoll)).Methods("POST")
+	r.HandleFunc("/api/v1/polls/vote/{page:[0-9]+}/{option}",
+		mid.Auth(con.VoteSubmit)).Methods("POST")
+
+	log.Println(http.ListenAndServe(os.Getenv("PORT"), r))
 }

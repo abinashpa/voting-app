@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vote</title>
+  </head>
+  <link
+    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <body style="background-color: #f3f3f3" class="font-sans">
+    <center>
+      <main class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4 m-4">
+        <h3 id="title" class="underline ... text-3xl">
+          {{.PollNum}}: {{.Title}}
+        </h3>
+        <div class="space-y-2">
+          <label for="option1" class="flex items-center space-x-4">
+            <input name="poll" id="option1" type="radio" value="option1" />
+            <span>{{.Option1}}</span>
+          </label>
+          <span class="italic">votes:{{.Option1Vote}}</span>
+          <label for="option2" class="flex items-center space-x-4">
+            <input name="poll" id="option2" type="radio" value="option2" />
+            <span>{{.Option2}}</span>
+          </label>
+          <span class="italic">votes:{{.Option2Vote}}</span>
+          <label for="option3" class="flex items-center space-x-4">
+            <input name="poll" id="option3" type="radio" value="option3" />
+            <span>{{.Option3}}</span>
+          </label>
+          <span class="italic">votes:{{.Option3Vote}}</span>
+          <label for="option4" class="flex items-center space-x-4">
+            <input name="poll" id="option4" type="radio" value="option4" />
+            <span>{{.Option4}}</span>
+          </label>
+          <span class="italic">votes:{{.Option4Vote}}</span>
+          <label for="option5" class="flex items-center space-x-4">
+            <input name="poll" id="option5" type="radio" value="option5" />
+            <span>{{.Option5}}</span>
+          </label>
+          <span class="italic">votes:{{.Option5Vote}}</span>
+        </div>
+        <hr class="mt-8" />
+        <span class="italic text-2xl">Total:{{.TotalVotes}}</span>
+        <br />
+        <button
+          id="submit"
+          class="my-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        >
+          VOTE
+        </button>
+      </main>
+    </center>
+  </body>
+  <script>
+    const pollNum = document.querySelector("#title").innerText.split(":")[0];
+    const btn = document.querySelector("#submit");
+    const radios = document.getElementsByName("poll");
+    btn.addEventListener("click", (event) => {
+      for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+          // do whatever you want with the checked radio
+          fetch(`/api/v1/polls/vote/${pollNum}/${radios[i].value}`, {
+            method: "POST",
+          })
+            .then((res) => {
+              if (res.status) {
+                window.location = "/polls/view/" + pollNum;
+              }
+            })
+            .catch(alert);
+          return;
+        }
+      }
+      alert("Please Select A Value");
+    });
+  </script>
+</html>

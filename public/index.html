@@ -3,7 +3,148 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>index</title>
+    <title>Index</title>
   </head>
-  <body></body>
+  <link
+    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <body
+    class="font-sans text-lg text-gray-800 text-center"
+    style="background-color: #f3f3f3"
+  >
+    <main>
+      <center>
+        <form
+          class="container w-full max-w-sm m-4 max-w-sm rounded overflow-hidden shadow-lg p-4 bg-white"
+        >
+          <label
+            class="block text-gray-700 text-2xl font-bold mb-1 mt-8"
+            for="title"
+          >
+            Title
+          </label>
+          <input
+            id="title"
+            class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="What is your favorite food?"
+          />
+          <label
+            class="block text-gray-700 text-2xl font-bold mb-1 mt-4"
+            for="username"
+          >
+            Option 1
+          </label>
+          <input
+            id="option1"
+            class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="option1"
+          />
+          <label
+            class="block text-gray-700 text-2xl font-bold mb-1 mt-4"
+            for="username"
+          >
+            Option 2
+          </label>
+          <input
+            id="option2"
+            class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="option2"
+          />
+          <label
+            class="block text-gray-700 text-2xl font-bold mb-1 mt-4"
+            for="username"
+          >
+            Option 3
+          </label>
+          <input
+            id="option3"
+            class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="option3"
+          />
+          <label
+            class="block text-gray-700 text-2xl font-bold mb-1 mt-4"
+            for="username"
+          >
+            Option 4
+          </label>
+          <input
+            id="option4"
+            class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="option4"
+          />
+          <label
+            class="block text-gray-700 text-2xl font-bold mb-1 mt-4"
+            for="username"
+          >
+            Option 5
+          </label>
+          <input
+            id="option5"
+            class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+            type="text"
+            placeholder="option5"
+          />
+          <button
+            id="submit"
+            class="my-3 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+          >
+            Create Poll
+          </button>
+        </form>
+      </center>
+    </main>
+  </body>
+  <script>
+    const btn = document.querySelector("#submit");
+    const title = document.querySelector("#title");
+    const o1 = document.querySelector("#option1");
+    const o2 = document.querySelector("#option2");
+    const o3 = document.querySelector("#option3");
+    const o4 = document.querySelector("#option4");
+    const o5 = document.querySelector("#option5");
+
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (
+        !title.value ||
+        !o1.value ||
+        !o2.value ||
+        !o3.value ||
+        !o4.value ||
+        !o5.value
+      ) {
+        alert("Please fill the form");
+        return;
+      }
+
+      fetch("/api/v1/polls/create", {
+        method: "POST",
+        "Content-Type": "application/json",
+        body: JSON.stringify({
+          title: title.value,
+          option1: o1.value,
+          option2: o2.value,
+          option3: o3.value,
+          option4: o4.value,
+          option5: o5.value,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.ok) {
+            // redirect to "/polls/my"
+            window.location = "/polls/my";
+          } else {
+            alert(res.msg);
+          }
+        })
+        .catch((e) => alert("Something Went Wrong!"));
+    });
+  </script>
 </html>

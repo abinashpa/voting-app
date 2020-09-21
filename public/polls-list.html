@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>.PageName</title>
+  </head>
+  <link
+    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <body class="font-sans" style="background-color: #f3f3f3">
+    <center>
+      <main
+        class="container max-w-sm rounded overflow-hidden shadow-lg bg-white p-4 m-4"
+      >
+        <div class="container">
+          {{range .Arr}}
+          <a href="/polls/view/{{.PollID}}" class="mt-4">
+            <div
+              class="text-3xl my-4 group bg-white hover:bg-gray-500 hover:text-white..."
+            >
+              {{.Title}}
+            </div>
+          </a>
+
+          {{end}}
+        </div>
+        <div class="inline-flex m-8">
+          {{if .ShowPrevBtn}}
+          <button
+            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+          >
+            <a href="/polls/{{.PageName}}/{{.Prev}}">Prev</a>
+          </button>
+          {{end}}
+          <button
+            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+          >
+            <a href="/polls/{{.PageName}}/{{.Next}}">Next</a>
+          </button>
+        </div>
+      </main>
+    </center>
+  </body>
+</html>
