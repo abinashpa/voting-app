@@ -95,7 +95,7 @@ func MyPolls(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles(
 		filepath.Join(PublicDir, "polls-list.html")))
 
-	d.PageName = "other"
+	d.PageName = "my"
 	d.ShowPrevBtn = page != 1
 	d.Next = page + 1
 	d.Prev = page - 1
