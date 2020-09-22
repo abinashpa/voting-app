@@ -6,7 +6,7 @@ Endpoints Specification
 Server is deployed on IP:142.93.221.156 PORT:80
 ```
 
-[Link](http://142.93.221.156).
+click [HERE](http://142.93.221.156) to visit
 
 ```
 GET /
@@ -58,7 +58,7 @@ POST /api/v1/user/signup
 ```
 
 ```json
-response {"ok":false:"msg":"if ok is false"}
+response {"ok": false, "msg": "if ok is false"}
 ```
 
 - register new user
@@ -71,7 +71,7 @@ POST /api/v1/user/login
 - cookie wil be set
 
 ```json
-response {"ok":false:"msg":"if ok is false"}
+response {"ok": false, "msg": "if ok is false"}
 ```
 
 ```json
@@ -79,7 +79,7 @@ response {"ok":false:"msg":"if ok is false"}
 ```
 
 ````json
-response {"ok":false:"msg":"if ok is false"}
+response {"ok": false:, "msg": "if ok is false"}
 ```
 
 ````
@@ -103,7 +103,7 @@ POST /api/v1/polls/create
 ````
 
 ```json
-response {"ok":false:"msg":"if ok is false"}
+response {"ok": false, "msg": "if ok is false"}
 ```
 
 ```
@@ -111,5 +111,5 @@ POST /api/v1/polls/vote/{poll_id}/{option1-option5}
 ```
 
 ```json
-response {"ok":false:"msg":"if ok is false"}
+response {"ok": false, "msg":"if ok is false"}
 ```
