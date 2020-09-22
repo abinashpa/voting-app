@@ -6,7 +6,7 @@ import (
 )
 
 // PublicDir is the folder where static file lives
-var PublicDir = filepath.Dir("../public")
+var PublicDir string
 
 // Index serve "/"
 func Index(res http.ResponseWriter, req *http.Request) {

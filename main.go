@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	con "github.com/abinash393/voting-app/controller"
@@ -18,6 +19,12 @@ import (
 )
 
 func init() {
+	if dir, err := filepath.Abs(filepath.Dir(os.Args[0])); err != nil {
+		panic(err.Error)
+	} else {
+		con.PublicDir = filepath.Join(dir, "public")
+	}
+
 	// initializing .env file
 	godotenv.Load("./config/.env")
 
