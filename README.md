@@ -79,7 +79,7 @@ response {"ok": false, "msg": "if ok is false"}
 ```
 
 ````json
-response {"ok": false:, "msg": "if ok is false"}
+response {"ok": false, "msg": "if ok is false"}
 ```
 
 ````
