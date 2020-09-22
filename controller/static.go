@@ -6,7 +6,7 @@ import (
 )
 
 // PublicDir is the folder where static file lives
-var PublicDir = "/home/abinash/Workspace/go/src/voting-app/public"
+var PublicDir = filepath.Dir("../public")
 
 // Index serve "/"
 func Index(res http.ResponseWriter, req *http.Request) {
