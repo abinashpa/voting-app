@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 
 	"github.com/abinash393/voting-app/model"
 
@@ -27,7 +28,9 @@ func VoteSubmit(w http.ResponseWriter, r *http.Request) {
 			vars["page"]); err != nil {
 			panic(err)
 		}
+		w.Header().Set("Content-Type", "text/html")
 		w.WriteHeader(http.StatusGone)
+		http.ServeFile(w, r, filepath.Join(PublicDir, "voting-ended.html"))
 		return
 	}
 

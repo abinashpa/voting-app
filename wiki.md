@@ -1,2 +1,0 @@
-- user can login with e-mail
--

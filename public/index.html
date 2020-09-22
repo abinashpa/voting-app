@@ -138,8 +138,8 @@
         .then((res) => res.json())
         .then((res) => {
           if (res.ok) {
-            // redirect to "/polls/my"
-            window.location = "/polls/my";
+            // redirect to "/polls/my/1"
+            window.location = "/polls/my/1";
           } else {
             alert(res.msg);
           }

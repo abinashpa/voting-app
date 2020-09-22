@@ -39,12 +39,13 @@ func ViewPolls(w http.ResponseWriter, r *http.Request) {
 		panic(err.Error())
 	}
 	p.PollNum, _ = strconv.Atoi(vars["id"])
-
+	fmt.Println("is open:", p.IsOpen)
 	w.Header().Set("Content-Type", "text/html")
 	if p.IsVoted == 1 {
 		http.ServeFile(w, r, filepath.Join(PublicDir, "already-voted.html"))
 	} else if p.IsOpen == 0 {
-		http.ServeFile(w, r, filepath.Join(PublicDir, "voteing-ended.html"))
+		fmt.Println("closed")
+		http.ServeFile(w, r, filepath.Join(PublicDir, "voting-ended.html"))
 	} else {
 		tmpl := template.Must(template.ParseFiles(
 			filepath.Join(PublicDir, "vote-poll.html")))
