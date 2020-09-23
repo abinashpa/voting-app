@@ -1,5 +1,7 @@
 github.com/cespare/xxhash/v2 v2.1.1 h1:6MnRN8NT7+YBpUIWxHtefFZOKTAPgGjpQSxqLNn0+qY=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
+github.com/ctrlrsf/logdna v0.0.0-20160923145940-e8165275b7a7 h1:DU0k89A6benrlmuT38UGvgXfZkn7Hiry+wB+958EK14=
+github.com/ctrlrsf/logdna v0.0.0-20160923145940-e8165275b7a7/go.mod h1:hlidOPnWBH4U3ygQaGDmU5RHzH3Z/eon7HItwSUVAhE=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dgrijalva/jwt-go v1.0.2 h1:KPldsxuKGsS2FPWsNeg9ZO18aCrGKujPoWXn2yo+KQM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=

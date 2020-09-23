@@ -3,6 +3,7 @@ module github.com/abinash393/voting-app
 go 1.15
 
 require (
+	github.com/ctrlrsf/logdna v0.0.0-20160923145940-e8165275b7a7 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-redis/redis/v8 v8.1.3
 	github.com/go-sql-driver/mysql v1.5.0

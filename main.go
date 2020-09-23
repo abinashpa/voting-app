@@ -79,5 +79,10 @@ func main() {
 	r.HandleFunc("/api/v1/polls/vote/{page:[0-9]+}/{option}",
 		mid.Auth(con.VoteSubmit)).Methods("POST")
 
-	log.Println(http.ListenAndServe(os.Getenv("PORT"), r))
+	go log.Println(http.ListenAndServeTLS(os.Getenv("SPORT"),
+		"/etc/letsencrypt/live/abinash.tech/fullchain.pem",
+		"/etc/letsencrypt/live/abinash.tech/privkey.pem",
+		r))
+
+	log.Println(http.ListenAndServe(os.Getenv("PORT"), http.HandlerFunc(con.RedirectTLS)))
 }
