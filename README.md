@@ -2,11 +2,8 @@
 
 Endpoints Specification
 
-```
-Server is deployed on IP:142.93.221.156 PORT:80
-```
 
-click [HERE](http://142.93.221.156) to visit
+Live @ [abinash.tech](https://abinash.tech) to visit
 
 ```
 GET /
