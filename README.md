@@ -67,22 +67,23 @@ POST /api/v1/user/login
 - login new user
 - cookie wil be set
 
+#### response:
 ```json
-response {"ok": false, "msg": "if ok is false"}
+{"ok": false, "msg": "if ok is false"}
 ```
 
 ```json
 { "email": "mail@name.io:", "password": "qwerty" }
 ```
 
+#### response:
 ````json
-response {"ok": false, "msg": "if ok is false"}
+{"ok": false, "msg": "if ok is false"}
 ```
 
+#### POST:
 ````
-
-POST /api/v1/polls/create
-
+/api/v1/polls/create
 ````
 
 - create a new poll
@@ -99,14 +100,17 @@ POST /api/v1/polls/create
 }
 ````
 
+#### response:
 ```json
-response {"ok": false, "msg": "if ok is false"}
+{"ok": false, "msg": "if ok is false"}
 ```
 
+#### POST
 ```
-POST /api/v1/polls/vote/{poll_id}/{option1-option5}
+/api/v1/polls/vote/{poll_id}/{option1-option5}
 ```
 
+#### response:
 ```json
-response {"ok": false, "msg":"if ok is false"}
+{"ok": false, "msg":"if ok is false"}
 ```
